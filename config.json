@@ -1,0 +1,27 @@
+{
+    "olt_devices": {
+        "1": {
+            "name": "Vulcan OLT",
+            "ip": "192.168.4.222",
+            "description": "Backup distribution OLT - Rack 2"
+        },
+        "2": {
+            "name": "Tatooine OLT",
+            "ip": "192.168.6.150",
+            "description": "Backup distribution OLT - Rack 2"
+        }
+    },
+    "credentials": {
+        "username": "admin",
+        "password": "MayD4sBwitU"
+    },
+    "file_paths": {
+        "save_file": "onu_status.json",
+        "mac_address_file": "path\\to\\file\\mac_address_list.txt",
+        "log_file": "onu_movement_log.json"
+    },
+    "settings": {
+        "save_debounce_time": 2,
+        "save_batch_size": 5
+    }
+}
