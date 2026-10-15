@@ -1,0 +1,46 @@
+{
+  "cdata_credentials": {
+    "username": "admin",
+    "password": "Ngcgreen"
+  },
+  "cdata_save_file": "onu_status.json",
+  "ports": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "api_port": 8310,
+  "cors_origins": [],
+  "auto_scan": {
+    "enabled": true,
+    "interval_seconds": 1200
+  },
+  "alarms": {
+    "enabled": true,
+    "log_file": "alarm_log.txt",
+    "reconnect_backoff_seconds": [
+      5,
+      10,
+      30,
+      60
+    ],
+    "offline_grace_seconds": 30
+  },
+  "names": {
+    "retry_interval_seconds": 60,
+    "updates_log": "name_updates.txt"
+  },
+  "dashboard": {
+    "refresh_interval_seconds": 15,
+    "signal_warning_dbm": -27,
+    "signal_critical_dbm": -30,
+    "pon_outage_partial_ratio": 0.5,
+    "pon_outage_min_onus_ever": 2,
+    "list_limit": 200
+  }
+}
