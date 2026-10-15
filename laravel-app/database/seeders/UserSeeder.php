@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             ['email' => 'admin'],
             [
                 'name'     => 'admin',
-                'password' => Hash::make('admin4231'),
+                'password' => Hash::make('admin'),
                 'role'     => 'admin',
             ]
         );
@@ -24,8 +24,8 @@ class UserSeeder extends Seeder
         User::updateOrCreate(
             ['email' => 'noc'],
             [
-                'name'     => 'noc',
-                'password' => Hash::make('SupportLevel1'),
+                'name'     => 'user',
+                'password' => Hash::make('user'),
                 'role'     => 'noc',
             ]
         );
