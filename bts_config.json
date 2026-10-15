@@ -1,0 +1,123 @@
+{
+    "regions": [
+        "Core Worlds",
+        "Outer Rim Territories",
+        "Mid Rim",
+        "Expansion Region",
+        "Deep Core"
+    ],
+    "bts_sites": [
+        {
+            "name": "CORUSCANT-CENTRAL",
+            "region": "Core Worlds",
+            "zone": "Coruscant",
+            "type": "subspace_relay",
+            "rt_ip": "10.0.1.1",
+            "olt_ip": "10.0.1.12",
+            "olt_type": "CDATA"
+        },
+        {
+            "name": "CORUSCANT-ARRAY (BEACON)",
+            "region": "Core Worlds",
+            "zone": "Coruscant",
+            "type": "comms_array",
+            "rt_ip": "10.0.1.17"
+        },
+        {
+            "name": "ALDERAAN-RELAY",
+            "region": "Core Worlds",
+            "zone": "Alderaan",
+            "type": "subspace_relay",
+            "rt_ip": "10.0.2.1",
+            "olt_ip": "10.0.2.12",
+            "olt_type": "Kuat Drive Yards"
+        },
+        {
+            "name": "CORELLIA-HUB",
+            "region": "Core Worlds",
+            "zone": "Corellian Sector",
+            "type": "subspace_relay",
+            "rt_ip": "10.0.3.1"
+        },
+        {
+            "name": "TATOOINE-BEACON",
+            "region": "Outer Rim Territories",
+            "zone": "Arkanis Sector",
+            "type": "subspace_relay",
+            "rt_ip": "172.16.10.1",
+            "olt_ip": "172.16.10.2",
+            "olt_type": "CDATA"
+        },
+        {
+            "name": "GEONOSIS-OUTPOST",
+            "region": "Outer Rim Territories",
+            "zone": "Arkanis Sector",
+            "type": "subspace_relay",
+            "rt_ip": "172.16.11.1",
+            "olt_ip": "172.16.11.2",
+            "olt_type": "Cygnus Spaceworks"
+        },
+        {
+            "name": "MANDALORE-POST",
+            "region": "Outer Rim Territories",
+            "zone": "Mandalore Sector",
+            "type": "subspace_relay",
+            "rt_ip": "172.16.20.3",
+            "olt_ip": "172.16.20.2",
+            "olt_type": "Cygnus Spaceworks"
+        },
+        {
+            "name": "KESSEL-WAYPOINT",
+            "region": "Outer Rim Territories",
+            "zone": "Mandalore Sector",
+            "type": "comms_array",
+            "rt_ip": "172.16.21.1"
+        },
+        {
+            "name": "RYLOTH-RELAY",
+            "region": "Outer Rim Territories",
+            "zone": "Mandalore Sector",
+            "type": "comms_array",
+            "rt_ip": "172.16.22.1"
+        },
+        {
+            "name": "NABOO-STATION",
+            "region": "Mid Rim",
+            "zone": "Chommel Sector",
+            "type": "subspace_relay",
+            "rt_ip": "192.168.100.1",
+            "olt_ip": "192.168.100.2",
+            "olt_type": "CDATA"
+        },
+        {
+            "name": "KASHYYYK-NODE",
+            "region": "Mid Rim",
+            "zone": "Trans-Hydian",
+            "type": "comms_array",
+            "rt_ip": "192.168.101.1"
+        },
+        {
+            "name": "TAKODANA-BEACON",
+            "region": "Mid Rim",
+            "zone": "Chommel Sector",
+            "type": "comms_array",
+            "rt_ip": "192.168.102.1"
+        },
+        {
+            "name": "UMBARA-ARRAY",
+            "region": "Core Worlds",
+            "zone": "Coruscant",
+            "type": "subspace_relay",
+            "rt_ip": "10.0.4.1",
+            "olt_ip": "10.0.4.2",
+            "olt_type": "CDATA"
+        },
+        {
+            "name": "BYSS-CENTRAL",
+            "region": "Deep Core",
+            "zone": "Deep Core Interior",
+            "type": "comms_array",
+            "rt_ip": "10.254.0.1"
+        }
+    ]
+}
