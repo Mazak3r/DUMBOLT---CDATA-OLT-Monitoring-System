@@ -1,0 +1,149 @@
+<div>
+    {{-- Header --}}
+    <div class="flex items-center justify-between mb-6">
+        <div>
+            <a href="{{ route('olts') }}" class="text-sm text-slate-400 hover:text-slate-200">← OLTs</a>
+            <h1 class="text-2xl font-bold mt-1">{{ $olt }}</h1>
+        </div>
+        <div class="flex items-center gap-2">
+            <button wire:click="monitorAll"
+                    wire:loading.attr="disabled"
+                    class="px-3 py-1.5 text-sm rounded-md bg-sky-600 hover:bg-sky-500 transition disabled:opacity-50">
+                <span wire:loading.remove wire:target="monitorAll">⟳ Scan all ports</span>
+                <span wire:loading wire:target="monitorAll">Scanning…</span>
+            </button>
+            <button wire:click="refresh"
+                    class="px-3 py-1.5 text-sm rounded-md bg-slate-800 hover:bg-slate-700 transition">
+                ⟳ Refresh
+            </button>
+        </div>
+    </div>
+
+    {{-- Flash / error --}}
+    @if ($flash)
+        <div class="rounded-lg bg-emerald-900/40 border border-emerald-700 px-4 py-2 mb-4 text-sm text-emerald-200">
+            {{ $flash }}
+        </div>
+    @endif
+    @if ($error)
+        <div class="rounded-lg bg-red-900/40 border border-red-700 px-4 py-2 mb-4 text-sm text-red-200">
+            <span class="font-mono break-all">{{ $error }}</span>
+        </div>
+    @endif
+
+    {{-- Ports --}}
+    @if ($data && count($data['ports'] ?? []) > 0)
+        @php
+            $ports = $data['ports'];
+            ksort($ports, SORT_NUMERIC);
+        @endphp
+
+        @foreach ($ports as $portStr => $onus)
+            @php
+                $online  = collect($onus)->where('Status', 'online')->count();
+                $offline = count($onus) - $online;
+            @endphp
+            <div class="mb-6 rounded-lg border border-slate-800 overflow-hidden">
+                <div class="flex items-center justify-between bg-slate-900/80 px-4 py-2">
+                    <div class="font-semibold">
+                        Port {{ $portStr }}
+                        <span class="text-slate-500 font-normal ml-2 text-sm">
+                            {{ $online }} online · {{ $offline }} offline
+                        </span>
+                    </div>
+                    <button wire:click="monitorPort({{ (int)$portStr }})"
+                            wire:loading.attr="disabled"
+                            class="text-xs px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 transition disabled:opacity-50">
+                        <span wire:loading.remove wire:target="monitorPort({{ (int)$portStr }})">⟳ scan this port</span>
+                        <span wire:loading wire:target="monitorPort({{ (int)$portStr }})">Scanning…</span>
+                    </button>
+                </div>
+
+                @if (count($onus) === 0)
+                    <div class="px-4 py-3 text-sm text-slate-500">No ONUs recorded for this port.</div>
+                @else
+                    <table class="w-full text-sm">
+                        <thead class="text-slate-400 bg-slate-900/40">
+                            <tr>
+                                <th class="text-left px-3 py-2 font-medium w-20">Status</th>
+                                <th class="text-left px-3 py-2 font-medium w-16">ID</th>
+                                <th class="text-left px-3 py-2 font-medium">Name</th>
+                                <th class="text-left px-3 py-2 font-medium">MAC</th>
+                                <th class="text-left px-3 py-2 font-medium w-32">Signal</th>
+                                <th class="text-left px-3 py-2 font-medium">Learned MACs</th>
+                                <th class="text-right px-3 py-2 font-medium w-32">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            @foreach ($onus as $onu)
+                                @php
+                                    $status = $onu['Status'] ?? 'unknown';
+                                    $onuId  = (string)($onu['ID'] ?? '');
+                                    $mac    = $onu['Mac address'] ?? '';
+                                    $name   = $onu['Name'] ?? '';
+                                    $sig    = $onu['Onu signal'] ?? 'N/A';
+                                    $learned = $onu['Learned MACs'] ?? [];
+                                @endphp
+                                <tr class="hover:bg-slate-900/40">
+                                    <td class="px-3 py-2">
+                                        @if ($status === 'online')
+                                            <span class="text-emerald-400">● online</span>
+                                        @else
+                                            <span class="text-red-400">● offline</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 font-mono">{{ $onuId }}</td>
+                                    <td class="px-3 py-2">
+                                        @if ($name)
+                                            {{ $name }}
+                                        @else
+                                            <span class="text-slate-500 italic">(unnamed)</span>
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2 font-mono text-slate-400">{{ $mac }}</td>
+                                    <td class="px-3 py-2 font-mono">{{ $sig }}</td>
+                                    <td class="px-3 py-2">
+                                        @if (count($learned) === 0)
+                                            <span class="text-slate-500">—</span>
+                                        @else
+                                            <div class="flex flex-wrap gap-1">
+                                                @foreach ($learned as $lm)
+                                                    <span class="text-xs font-mono bg-slate-800 rounded px-1.5 py-0.5">{{ $lm }}</span>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-3 py-2">
+                                        <div class="flex items-center gap-1 justify-end">
+                                            {{-- Reboot (online only) --}}
+                                            @if ($status === 'online')
+                                                <button wire:click="reboot({{ (int)$portStr }}, '{{ $onuId }}')"
+                                                        wire:confirm="Reboot ONU {{ $onuId }} on port {{ $portStr }}?"
+                                                        class="text-xs px-2 py-1 rounded bg-amber-700 hover:bg-amber-600 transition">
+                                                    Reboot
+                                                </button>
+                                            @endif
+
+                                            {{-- Delete (offline only) --}}
+                                            @if ($status === 'offline')
+                                                <button wire:click="deleteOnu({{ (int)$portStr }}, '{{ $onuId }}', '{{ $mac }}')"
+                                                        wire:confirm="Delete offline ONU {{ $onuId }}?"
+                                                        class="text-xs px-2 py-1 rounded bg-red-800 hover:bg-red-700 transition">
+                                                    Delete
+                                                </button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+            </div>
+        @endforeach
+    @elseif (!$error)
+        <div class="rounded-lg border border-slate-800 bg-slate-900/50 p-6 text-slate-400">
+            No scan data yet. Click <strong>Scan all ports</strong> to fetch.
+        </div>
+    @endif
+</div>

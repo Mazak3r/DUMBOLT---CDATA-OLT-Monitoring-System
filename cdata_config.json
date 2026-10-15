@@ -1,7 +1,7 @@
 {
   "cdata_credentials": {
     "username": "admin",
-    "password": "Ngcgreen"
+    "password": "admin"
   },
   "cdata_save_file": "onu_status.json",
   "ports": [

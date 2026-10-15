@@ -1,0 +1,15 @@
+.git/
+.gitignore
+node_modules/
+vendor/
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+bootstrap/cache/*
+database/database.sqlite
+.env
+.env.backup
+npm-debug.log
+yarn-error.log
+.phpunit.result.cache

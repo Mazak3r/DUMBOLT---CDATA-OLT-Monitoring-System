@@ -1,0 +1,18 @@
+<?php
+
+use App\Livewire\AlarmsPage;
+use App\Livewire\AutoScanPage;
+use App\Livewire\Dashboard;
+use App\Livewire\DiscoveryLogPage;
+use App\Livewire\OltDetail;
+use App\Livewire\OltList;
+use App\Livewire\SearchPage;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/',             Dashboard::class)->name('dashboard');
+Route::get('/olts',         OltList::class)->name('olts');
+Route::get('/olts/{olt}',   OltDetail::class)->name('olt.detail');
+Route::get('/search',       SearchPage::class)->name('search.page');
+Route::get('/auto-scan',    AutoScanPage::class)->name('auto-scan.page');
+Route::get('/alarms',       AlarmsPage::class)->name('alarms.page');
+Route::get('/discovery-log',DiscoveryLogPage::class)->name('discovery.page');
